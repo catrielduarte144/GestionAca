@@ -28,6 +28,7 @@ namespace GestionAca
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     string query = @"
+                    select
                         m.id_materia,
                         m.nombre AS Materia,
                         c.nombre AS Carrera,
@@ -65,8 +66,8 @@ namespace GestionAca
             try
             {
                 //cargar carreras y profesores desde la base de datos
-                CargarClaveForanea(cmbCarrera, "Carreras", "nombre", "id_carrera");
-                CargarClaveForanea(cmbProfesor, "Profesores", "apellido + ', ' nombre", "id_profesor");
+                CargarClaveForanea(cmbCarrera, "Carrera", "nombre", "id_carrera");
+                CargarClaveForanea(cmbProfesor, "Profesores", "apellido + ', ' + nombre", "id_profesor");
             }
             catch (Exception ex)
             {
@@ -124,17 +125,15 @@ namespace GestionAca
         private bool ValidarCampos()
         {
             if (string.IsNullOrWhiteSpace(txtMateria.Text) ||
-            {
                 cmbCarrera.SelectedValue == null ||
                 cmbProfesor.SelectedValue == null ||
                 cmbEstado.SelectedValue == null ||
                 cmbTurno.SelectedValue == null)
-            }
-            else
             {
                 MessageBox.Show("Porfavor complete el nombre de la materia y seleccione estado, carrera, profesor y turno");
                 return false;
             }
+            return true;
         }
 
         //insertar materia
@@ -162,7 +161,7 @@ namespace GestionAca
                     command.ExecuteNonQuery();
                     MessageBox.Show("Materia insertada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     CargarMaterias();
-                    LimpiarCampos();
+                    LimpiarCampo();
                 }
             }
             catch (Exception ex)
@@ -202,18 +201,20 @@ namespace GestionAca
                     command.Parameters.AddWithValue("@id_profesor", cmbProfesor.SelectedValue);
                     command.Parameters.AddWithValue("@turno", cmbTurno.SelectedValue);
                     command.Parameters.AddWithValue("@estado", cmbEstado.SelectedValue);
-                    command.Parameters.AddWithValue("@id", txtID);
+                    //command.Parameters.AddWithValue("@id", txtID);
+                    command.Parameters.AddWithValue("@id", txtID.Text.Trim());
+
 
                     command.ExecuteNonQuery();
                     MessageBox.Show("Materia modificada correctamente. ");
                     CargarMaterias();
-                    LimpiarCampos();
+                    LimpiarCampo();
 
                 }
             }
             catch(Exception ex) 
             {
-                MessageBox.Show("Error al modificar materia: " + ex.Message, "Error de BD", MessageBoxButtons.OK, MessageBox.Error);
+                MessageBox.Show("Error al modificar materia: " + ex.Message, "Error de BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -222,16 +223,18 @@ namespace GestionAca
         {
             if (string.IsNullOrWhiteSpace(txtID.Text))
             {
-                MessageBox.Show("Seleccione una materia para dar de baja. ",ex.Messege, "Advertencia" MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show("Seleccione una materia para dar de baja. ",ex.Messege, "Advertencia" MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Seleccione una materia para dar de baja.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
                 return;
             }
 
             try
             {
-                using (SqlConnection connection = DatabaseConnection.GetConnection)
+                using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     connection.Open();
-                    string query = "UPDATE Materias SET estado = 'inativo' WWHERE id_materia = @id";
+                    string query = "UPDATE Materias SET estado = 'inactivo' WHERE id_materia = @id";
 
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@id", txtID.Text);
@@ -263,6 +266,11 @@ namespace GestionAca
         private void btnCerrar_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnInsertar_Click_1(object sender, EventArgs e)
+        {
+
         }
     }
 }

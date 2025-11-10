@@ -61,6 +61,8 @@ namespace GestionAca
             else
             {
                 // ... (Mostrar error de usuario/clave incorrectos)
+                MessageBox.Show("usuario/clave incorrectos");
+
             }
         }
         private bool ValidarCredencialUsuario(string usuario, string clave)
@@ -98,6 +100,11 @@ namespace GestionAca
         }
 
         private void btnIngresar_Click_1(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
         {
 
         }

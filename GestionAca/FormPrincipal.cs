@@ -21,6 +21,7 @@ namespace GestionAca
         private void MostrarFormulario(Form formulario)
         {
             this.Hide(); //ocultar el formulario principal
+            formulario.ShowDialog(); //abrir form clickeado
             this.Show(); //mostrar el formulario seleccionado
         }
 
