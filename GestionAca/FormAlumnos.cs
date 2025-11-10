@@ -38,7 +38,7 @@ namespace GestionAca
             {                
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
-                    string query = "SELECT id_alumno, apellido, nombre, dni, legajo, email, estado FROM Alumnos";
+                    string query = "SELECT id_alumno, apellido, nombre, dni, legajo, estado FROM Alumnos";
                     SqlDataAdapter da = new SqlDataAdapter(query, connection);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -86,7 +86,7 @@ namespace GestionAca
                     command.Parameters.AddWithValue("@nombre", txtNombre.Text);
                     command.Parameters.AddWithValue("@dni", txtDni.Text);
                     command.Parameters.AddWithValue("@legajo", txtLegajo.Text);
-                    command.Parameters.AddWithValue("@email", txtEmail.Text);
+                    //command.Parameters.AddWithValue("@email", txtEmail.Text);
 
                     command.ExecuteNonQuery();
                     MessageBox.Show("Alumno agregado correctamente.");
@@ -132,7 +132,7 @@ namespace GestionAca
                     command.Parameters.AddWithValue("@nombre", txtNombre.Text);
                     command.Parameters.AddWithValue("@dni", txtDni.Text);
                     command.Parameters.AddWithValue("@legajo", txtLegajo.Text);
-                    command.Parameters.AddWithValue("@email", txtEmail.Text);
+                    //command.Parameters.AddWithValue("@email", txtEmail.Text);
                     command.Parameters.AddWithValue("@id", txtID.Text);
 
                     command.ExecuteNonQuery();
@@ -196,7 +196,7 @@ namespace GestionAca
                     txtNombre.Text = row.Cells["nombre"].Value.ToString() ?? string.Empty;
                     txtDni.Text = row.Cells["dni"].Value.ToString() ?? string.Empty;
                     txtLegajo.Text = row.Cells["legajo"].Value.ToString() ?? string.Empty;
-                    txtEmail.Text = row.Cells["email"].Value.ToString() ?? string.Empty;
+                    //txtEmail.Text = row.Cells["email"].Value.ToString() ?? string.Empty;
 
                 }
                   
@@ -211,7 +211,7 @@ namespace GestionAca
             txtNombre.Clear();
             txtDni.Clear();
             txtLegajo.Clear();
-            txtEmail.Clear();
+            //txtEmail.Clear();
         }
 
         //boton cerrar formulario
@@ -223,5 +223,7 @@ namespace GestionAca
         {
 
         }
+
+
     }
 }
