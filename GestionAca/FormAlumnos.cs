@@ -126,7 +126,7 @@ namespace GestionAca
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     connection.Open();
-                    string query = "UPDATE Alumnos SET apellido = @apellido, nombre = @nombre, dni = @dni, legajo = @legajo, email = @email WHERE id_alumno = @id";
+                    string query = "UPDATE Alumnos SET apellido = @apellido, nombre = @nombre, dni = @dni, legajo = @legajo WHERE id_alumno = @id";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@apellido", txtApellido.Text);
                     command.Parameters.AddWithValue("@nombre", txtNombre.Text);
@@ -219,11 +219,20 @@ namespace GestionAca
         {
             this.Close();
         }
-        private void label1_Click(object sender, EventArgs e)
+
+        private void dgvAlumnos_Click(object sender, EventArgs e)
         {
+            //cargar datos de la columna clickeada en objetos txt
 
+            txtID.Text = dgvAlumnos.SelectedRows[0].Cells["id_alumno"].Value.ToString();
+            txtApellido.Text = dgvAlumnos.SelectedRows[0].Cells["apellido"].Value.ToString();
+            txtNombre.Text = dgvAlumnos.SelectedRows[0].Cells["nombre"].Value.ToString();
+            txtLegajo.Text = dgvAlumnos.SelectedRows[0].Cells["legajo"].Value.ToString();
+            txtDni.Text = dgvAlumnos.SelectedRows[0].Cells["dni"].Value.ToString();
+
+            //deshabilitar edición de texto celda
+            dgvAlumnos.EditMode = DataGridViewEditMode.EditProgrammatically;
         }
-
 
     }
 }

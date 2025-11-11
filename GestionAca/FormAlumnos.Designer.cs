@@ -60,10 +60,9 @@ namespace GestionAca
             this.dgvAlumnos.RowHeadersWidth = 62;
             this.dgvAlumnos.RowTemplate.Height = 28;
             this.dgvAlumnos.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvAlumnos.Size = new System.Drawing.Size(425, 277);
+            this.dgvAlumnos.Size = new System.Drawing.Size(696, 277);
             this.dgvAlumnos.TabIndex = 0;
-            this.dgvAlumnos.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvAlumnos_CellContentClick);
-            this.dgvAlumnos.DoubleClick += new System.EventHandler(this.dgvAlumnos_DoubleClick);
+            this.dgvAlumnos.Click += new System.EventHandler(this.dgvAlumnos_Click);
             // 
             // txtID
             // 
@@ -139,44 +138,48 @@ namespace GestionAca
             // 
             // btnEliminar
             // 
-            this.btnEliminar.Location = new System.Drawing.Point(450, 202);
+            this.btnEliminar.Location = new System.Drawing.Point(717, 202);
             this.btnEliminar.Margin = new System.Windows.Forms.Padding(2);
             this.btnEliminar.Name = "btnEliminar";
             this.btnEliminar.Size = new System.Drawing.Size(75, 30);
             this.btnEliminar.TabIndex = 15;
             this.btnEliminar.Text = "Eliminar";
             this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
             // 
             // btnModificar
             // 
-            this.btnModificar.Location = new System.Drawing.Point(450, 168);
+            this.btnModificar.Location = new System.Drawing.Point(717, 168);
             this.btnModificar.Margin = new System.Windows.Forms.Padding(2);
             this.btnModificar.Name = "btnModificar";
             this.btnModificar.Size = new System.Drawing.Size(75, 30);
             this.btnModificar.TabIndex = 17;
             this.btnModificar.Text = "Modificar";
             this.btnModificar.UseVisualStyleBackColor = true;
+            this.btnModificar.Click += new System.EventHandler(this.btnModificar_Click);
             // 
             // btnCerrar
             // 
             this.btnCerrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btnCerrar.Location = new System.Drawing.Point(485, 20);
+            this.btnCerrar.Location = new System.Drawing.Point(737, 11);
             this.btnCerrar.Margin = new System.Windows.Forms.Padding(2);
             this.btnCerrar.Name = "btnCerrar";
-            this.btnCerrar.Size = new System.Drawing.Size(40, 20);
+            this.btnCerrar.Size = new System.Drawing.Size(55, 32);
             this.btnCerrar.TabIndex = 18;
             this.btnCerrar.Text = "Cerrar";
             this.btnCerrar.UseVisualStyleBackColor = false;
+            this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // btnGrabar
             // 
-            this.btnGrabar.Location = new System.Drawing.Point(450, 134);
+            this.btnGrabar.Location = new System.Drawing.Point(717, 134);
             this.btnGrabar.Margin = new System.Windows.Forms.Padding(2);
             this.btnGrabar.Name = "btnGrabar";
             this.btnGrabar.Size = new System.Drawing.Size(75, 30);
             this.btnGrabar.TabIndex = 19;
             this.btnGrabar.Text = "Grabar";
             this.btnGrabar.UseVisualStyleBackColor = true;
+            this.btnGrabar.Click += new System.EventHandler(this.btnGrabar_Click);
             // 
             // txtDni
             // 
@@ -199,18 +202,18 @@ namespace GestionAca
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(457, 253);
+            this.label1.Location = new System.Drawing.Point(717, 253);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(142, 13);
+            this.label1.Size = new System.Drawing.Size(112, 13);
             this.label1.TabIndex = 22;
-            this.label1.Text = "Doble click en grilla Alumnos";
+            this.label1.Text = "Click en grilla Alumnos";
             // 
             // FormAlumnos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(628, 465);
+            this.ClientSize = new System.Drawing.Size(878, 465);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtDni);
@@ -237,20 +240,7 @@ namespace GestionAca
 
         }
 
-        private void dgvAlumnos_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
 
-        }
-
-        private void dgvAlumnos_DoubleClick(object sender, EventArgs e)
-        {
-            txtID.Text = dgvAlumnos.SelectedRows[0].Cells["id_alumno"].Value.ToString();
-            txtApellido.Text = dgvAlumnos.SelectedRows[0].Cells["apellido"].Value.ToString();
-            txtNombre.Text = dgvAlumnos.SelectedRows[0].Cells["nombre"].Value.ToString();
-            txtLegajo.Text = dgvAlumnos.SelectedRows[0].Cells["legajo"].Value.ToString();
-            txtDni.Text = dgvAlumnos.SelectedRows[0].Cells["dni"].Value.ToString();
-
-        }
 
 
         #endregion

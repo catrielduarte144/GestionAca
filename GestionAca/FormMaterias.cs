@@ -32,11 +32,10 @@ namespace GestionAca
                         m.id_materia,
                         m.nombre AS Materia,
                         c.nombre AS Carrera,
-                        p.apellido + ',´' + p.nombre AS Profesor,
-                        m.turno,
+                        p.apellido + ', ' + p.nombre AS Profesor,
                         m.estado
-                    FROM Materia m
-                    LEFT JOIN Carrera c ON m.id_carrera = c.id_carrera
+                    FROM Materias m
+                    LEFT JOIN carreras c ON m.id_carrera = c.id_carrera
                     LEFT JOIN Profesores p On m.id_profesor = p.id_profesor";
 
                     SqlDataAdapter da = new SqlDataAdapter(query, connection);
@@ -58,15 +57,15 @@ namespace GestionAca
             cmbEstado.Items.AddRange(new object[] { "Activo", "Inactivo" });
             cmbEstado.SelectedIndex = 0; //selecciona activo por defecto
 
-            //cargar turnos
-            cmbTurno.Items.Clear();
-            cmbTurno.Items.AddRange(new object[] { "Mañana", "Tarde", "Noche" });
-            cmbTurno.SelectedIndex = 0; //selecciona mañana por defecto
+            ////cargar turnos
+            //cmbTurno.Items.Clear();
+            //cmbTurno.Items.AddRange(new object[] { "Mañana", "Tarde", "Noche" });
+            //cmbTurno.SelectedIndex = 0; //selecciona mañana por defecto
 
             try
             {
                 //cargar carreras y profesores desde la base de datos
-                CargarClaveForanea(cmbCarrera, "Carrera", "nombre", "id_carrera");
+                CargarClaveForanea(cmbCarrera, "carreras", "nombre", "id_carrera");
                 CargarClaveForanea(cmbProfesor, "Profesores", "apellido + ', ' + nombre", "id_profesor");
             }
             catch (Exception ex)
@@ -93,7 +92,7 @@ namespace GestionAca
         }
 
         //evento de formulario
-        private void Form1_Load(object sender, EventArgs e)
+        private void FormMaterias_Load(object sender, EventArgs e)
         {
             CargarComboBoxes();
             CargarMaterias();
@@ -114,7 +113,7 @@ namespace GestionAca
 
                     //asignacion a combo por el testo visible
                     cmbEstado.Text = row.Cells["estado"].Value?.ToString() ?? string.Empty;
-                    cmbTurno.Text = row.Cells["turno"].Value?.ToString() ?? string.Empty;
+                    //cmbTurno.Text = row.Cells["turno"].Value?.ToString() ?? string.Empty;
                     cmbCarrera.Text = row.Cells["carrera"].Value?.ToString() ?? string.Empty;
                     cmbProfesor.Text = row.Cells["profesor"].Value?.ToString() ?? string.Empty;
                 }
@@ -127,10 +126,11 @@ namespace GestionAca
             if (string.IsNullOrWhiteSpace(txtMateria.Text) ||
                 cmbCarrera.SelectedValue == null ||
                 cmbProfesor.SelectedValue == null ||
-                cmbEstado.SelectedValue == null ||
-                cmbTurno.SelectedValue == null)
+                cmbEstado.SelectedValue == null //||
+                //cmbTurno.SelectedValue == null
+                )
             {
-                MessageBox.Show("Porfavor complete el nombre de la materia y seleccione estado, carrera, profesor y turno");
+                MessageBox.Show("Porfavor complete el nombre de la materia y seleccione estado, carrera y profesor");
                 return false;
             }
             return true;
@@ -155,7 +155,7 @@ namespace GestionAca
                     //se obtiene clave foranea 
                     command.Parameters.AddWithValue("@id_carrera", cmbCarrera.SelectedValue);
                     command.Parameters.AddWithValue("@id_profesor", cmbProfesor.SelectedValue);
-                    command.Parameters.AddWithValue("@turno", cmbTurno.SelectedItem.ToString());
+                   // command.Parameters.AddWithValue("@turno", cmbTurno.SelectedItem.ToString());
                     command.Parameters.AddWithValue("@estado", cmbEstado.SelectedItem.ToString());
 
                     command.ExecuteNonQuery();
@@ -199,7 +199,7 @@ namespace GestionAca
                     command.Parameters.AddWithValue("@nombre", txtMateria.Text.Trim());
                     command.Parameters.AddWithValue("@id_carrera", cmbCarrera.SelectedValue);
                     command.Parameters.AddWithValue("@id_profesor", cmbProfesor.SelectedValue);
-                    command.Parameters.AddWithValue("@turno", cmbTurno.SelectedValue);
+                    //command.Parameters.AddWithValue("@turno", cmbTurno.SelectedValue);
                     command.Parameters.AddWithValue("@estado", cmbEstado.SelectedValue);
                     //command.Parameters.AddWithValue("@id", txtID);
                     command.Parameters.AddWithValue("@id", txtID.Text.Trim());
@@ -259,7 +259,7 @@ namespace GestionAca
             cmbEstado.SelectedIndex = 0; //activo
             cmbCarrera.SelectedIndex = -1;
             cmbProfesor.SelectedIndex = -1;
-            cmbTurno.SelectedIndex = 0; //mañana
+            //cmbTurno.SelectedIndex = 0; //mañana
         }
 
         //navegacion
@@ -272,5 +272,6 @@ namespace GestionAca
         {
 
         }
+
     }
 }

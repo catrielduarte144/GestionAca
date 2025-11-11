@@ -35,14 +35,12 @@
             this.btnEditar = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.txtID = new System.Windows.Forms.TextBox();
-            this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.txtMateria = new System.Windows.Forms.TextBox();
             this.cmbProfesor = new System.Windows.Forms.ComboBox();
-            this.cmbTurno = new System.Windows.Forms.ComboBox();
             this.cmbEstado = new System.Windows.Forms.ComboBox();
             this.cmbCarrera = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMateria)).BeginInit();
@@ -53,18 +51,18 @@
             this.dgvMateria.BackgroundColor = System.Drawing.SystemColors.InactiveCaption;
             this.dgvMateria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvMateria.Location = new System.Drawing.Point(45, 23);
-            this.dgvMateria.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.dgvMateria.Margin = new System.Windows.Forms.Padding(2);
             this.dgvMateria.Name = "dgvMateria";
             this.dgvMateria.RowHeadersWidth = 62;
             this.dgvMateria.RowTemplate.Height = 28;
-            this.dgvMateria.Size = new System.Drawing.Size(445, 148);
+            this.dgvMateria.Size = new System.Drawing.Size(759, 148);
             this.dgvMateria.TabIndex = 0;
             // 
             // btnInsertar
             // 
             this.btnInsertar.BackColor = System.Drawing.SystemColors.Info;
-            this.btnInsertar.Location = new System.Drawing.Point(494, 23);
-            this.btnInsertar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnInsertar.Location = new System.Drawing.Point(839, 23);
+            this.btnInsertar.Margin = new System.Windows.Forms.Padding(2);
             this.btnInsertar.Name = "btnInsertar";
             this.btnInsertar.Size = new System.Drawing.Size(80, 32);
             this.btnInsertar.TabIndex = 1;
@@ -75,8 +73,8 @@
             // btsCerrar
             // 
             this.btsCerrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btsCerrar.Location = new System.Drawing.Point(651, 14);
-            this.btsCerrar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btsCerrar.Location = new System.Drawing.Point(973, 23);
+            this.btsCerrar.Margin = new System.Windows.Forms.Padding(2);
             this.btsCerrar.Name = "btsCerrar";
             this.btsCerrar.Size = new System.Drawing.Size(43, 22);
             this.btsCerrar.TabIndex = 2;
@@ -86,8 +84,8 @@
             // btnEliminarMateria
             // 
             this.btnEliminarMateria.BackColor = System.Drawing.SystemColors.Info;
-            this.btnEliminarMateria.Location = new System.Drawing.Point(494, 138);
-            this.btnEliminarMateria.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEliminarMateria.Location = new System.Drawing.Point(839, 137);
+            this.btnEliminarMateria.Margin = new System.Windows.Forms.Padding(2);
             this.btnEliminarMateria.Name = "btnEliminarMateria";
             this.btnEliminarMateria.Size = new System.Drawing.Size(80, 32);
             this.btnEliminarMateria.TabIndex = 3;
@@ -97,8 +95,8 @@
             // btnEditar
             // 
             this.btnEditar.BackColor = System.Drawing.SystemColors.Info;
-            this.btnEditar.Location = new System.Drawing.Point(494, 79);
-            this.btnEditar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnEditar.Location = new System.Drawing.Point(839, 80);
+            this.btnEditar.Margin = new System.Windows.Forms.Padding(2);
             this.btnEditar.Name = "btnEditar";
             this.btnEditar.Size = new System.Drawing.Size(80, 32);
             this.btnEditar.TabIndex = 4;
@@ -118,20 +116,10 @@
             // txtID
             // 
             this.txtID.Location = new System.Drawing.Point(45, 205);
-            this.txtID.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtID.Margin = new System.Windows.Forms.Padding(2);
             this.txtID.Name = "txtID";
             this.txtID.Size = new System.Drawing.Size(126, 20);
             this.txtID.TabIndex = 6;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(223, 190);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(46, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "TURNO";
             // 
             // label3
             // 
@@ -176,7 +164,7 @@
             // txtMateria
             // 
             this.txtMateria.Location = new System.Drawing.Point(45, 261);
-            this.txtMateria.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.txtMateria.Margin = new System.Windows.Forms.Padding(2);
             this.txtMateria.Name = "txtMateria";
             this.txtMateria.Size = new System.Drawing.Size(126, 20);
             this.txtMateria.TabIndex = 15;
@@ -185,25 +173,16 @@
             // 
             this.cmbProfesor.FormattingEnabled = true;
             this.cmbProfesor.Location = new System.Drawing.Point(45, 314);
-            this.cmbProfesor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbProfesor.Margin = new System.Windows.Forms.Padding(2);
             this.cmbProfesor.Name = "cmbProfesor";
             this.cmbProfesor.Size = new System.Drawing.Size(126, 21);
             this.cmbProfesor.TabIndex = 16;
-            // 
-            // cmbTurno
-            // 
-            this.cmbTurno.FormattingEnabled = true;
-            this.cmbTurno.Location = new System.Drawing.Point(226, 205);
-            this.cmbTurno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
-            this.cmbTurno.Name = "cmbTurno";
-            this.cmbTurno.Size = new System.Drawing.Size(126, 21);
-            this.cmbTurno.TabIndex = 17;
             // 
             // cmbEstado
             // 
             this.cmbEstado.FormattingEnabled = true;
             this.cmbEstado.Location = new System.Drawing.Point(226, 261);
-            this.cmbEstado.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbEstado.Margin = new System.Windows.Forms.Padding(2);
             this.cmbEstado.Name = "cmbEstado";
             this.cmbEstado.Size = new System.Drawing.Size(126, 21);
             this.cmbEstado.TabIndex = 18;
@@ -212,7 +191,7 @@
             // 
             this.cmbCarrera.FormattingEnabled = true;
             this.cmbCarrera.Location = new System.Drawing.Point(226, 314);
-            this.cmbCarrera.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.cmbCarrera.Margin = new System.Windows.Forms.Padding(2);
             this.cmbCarrera.Name = "cmbCarrera";
             this.cmbCarrera.Size = new System.Drawing.Size(126, 21);
             this.cmbCarrera.TabIndex = 19;
@@ -222,17 +201,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(739, 385);
+            this.ClientSize = new System.Drawing.Size(1144, 393);
             this.Controls.Add(this.cmbCarrera);
             this.Controls.Add(this.cmbEstado);
-            this.Controls.Add(this.cmbTurno);
             this.Controls.Add(this.cmbProfesor);
             this.Controls.Add(this.txtMateria);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.txtID);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnEditar);
@@ -240,9 +217,10 @@
             this.Controls.Add(this.btsCerrar);
             this.Controls.Add(this.btnInsertar);
             this.Controls.Add(this.dgvMateria);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormMaterias";
             this.Text = "FormMaterias";
+            this.Load += new System.EventHandler(this.FormMaterias_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvMateria)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -258,14 +236,12 @@
         private System.Windows.Forms.Button btnEditar;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox txtID;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txtMateria;
         private System.Windows.Forms.ComboBox cmbProfesor;
-        private System.Windows.Forms.ComboBox cmbTurno;
         private System.Windows.Forms.ComboBox cmbEstado;
         private System.Windows.Forms.ComboBox cmbCarrera;
     }
