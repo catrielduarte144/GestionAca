@@ -57,6 +57,7 @@
             this.dgvMateria.RowTemplate.Height = 28;
             this.dgvMateria.Size = new System.Drawing.Size(759, 148);
             this.dgvMateria.TabIndex = 0;
+            this.dgvMateria.Click += new System.EventHandler(this.DgvMateria_Click);
             // 
             // btnInsertar
             // 
@@ -68,7 +69,7 @@
             this.btnInsertar.TabIndex = 1;
             this.btnInsertar.Text = "Insertar";
             this.btnInsertar.UseVisualStyleBackColor = false;
-            this.btnInsertar.Click += new System.EventHandler(this.btnInsertar_Click_1);
+            this.btnInsertar.Click += new System.EventHandler(this.btnInsertar_Click);
             // 
             // btsCerrar
             // 
@@ -193,7 +194,7 @@
             this.cmbCarrera.Location = new System.Drawing.Point(226, 314);
             this.cmbCarrera.Margin = new System.Windows.Forms.Padding(2);
             this.cmbCarrera.Name = "cmbCarrera";
-            this.cmbCarrera.Size = new System.Drawing.Size(126, 21);
+            this.cmbCarrera.Size = new System.Drawing.Size(194, 21);
             this.cmbCarrera.TabIndex = 19;
             // 
             // FormMaterias

@@ -42,6 +42,12 @@ namespace GestionAca
                     DataTable dt = new DataTable();
                     da.Fill(dt);
                     dgvMateria.DataSource = dt;
+                    //para seleccionar toda la fila al hacer clicl en cualquier celda
+                    dgvMateria.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+                    dgvMateria.MultiSelect = false;
+
+                    //para autoajustar ancho columna
+                    dgvMateria.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
                 }
             }
             catch (Exception ex)
@@ -100,25 +106,44 @@ namespace GestionAca
         }
 
         //mostrar datos en los cuadros al seleccionar una fila
-        private void dgvMateria_selectionChanged(object sender, EventArgs e)
+        private void DgvMateria_Click(object sender, EventArgs e)
         {
-            if (dgvMateria.SelectedRows.Count > 0)
-            {
-                DataGridViewRow row = dgvMateria.SelectedRows[0];
-                if (row != null)
-                {
-                    //asignacion de valores
-                    txtID.Text = row.Cells["id_materia"].Value?.ToString() ?? string.Empty;
-                    txtMateria.Text = row.Cells["Materia"].Value?.ToString() ?? string.Empty;
+            //asignacion de valores
+            txtID.Text = dgvMateria.SelectedRows[0].Cells["id_materia"].Value.ToString();
+            txtMateria.Text = dgvMateria.SelectedRows[0].Cells["Materia"].Value.ToString();
 
-                    //asignacion a combo por el testo visible
-                    cmbEstado.Text = row.Cells["estado"].Value?.ToString() ?? string.Empty;
-                    //cmbTurno.Text = row.Cells["turno"].Value?.ToString() ?? string.Empty;
-                    cmbCarrera.Text = row.Cells["carrera"].Value?.ToString() ?? string.Empty;
-                    cmbProfesor.Text = row.Cells["profesor"].Value?.ToString() ?? string.Empty;
-                }
-            }
+            //asignacion a combo Estado
+            var valorEstado = dgvMateria.SelectedRows[0].Cells["estado"].Value?.ToString();
+            if (valorEstado == "1")
+                cmbEstado.Text = "Activo";
+            else if (valorEstado == "0")
+                cmbEstado.Text = "Inactivo";
+            else
+                cmbEstado.SelectedIndex = -1; // si está nulo u otro valor
+
+
+            cmbProfesor.Text = dgvMateria.SelectedRows[0].Cells["profesor"].Value?.ToString() ?? string.Empty;
+            cmbCarrera.Text = dgvMateria.SelectedRows[0].Cells["carrera"].Value?.ToString() ?? string.Empty;
+
+            //deshabilitar edición de texto celda
+            dgvMateria.EditMode = DataGridViewEditMode.EditProgrammatically;
         }
+
+        //private void dgvAlumnos_Click(object sender, EventArgs e)
+        //{
+        //    //cargar datos de la columna clickeada en objetos txt
+
+        //    txtID.Text = dgvAlumnos.SelectedRows[0].Cells["id_alumno"].Value.ToString();
+        //    txtApellido.Text = dgvAlumnos.SelectedRows[0].Cells["apellido"].Value.ToString();
+        //    txtNombre.Text = dgvAlumnos.SelectedRows[0].Cells["nombre"].Value.ToString();
+        //    txtLegajo.Text = dgvAlumnos.SelectedRows[0].Cells["legajo"].Value.ToString();
+        //    txtDni.Text = dgvAlumnos.SelectedRows[0].Cells["dni"].Value.ToString();
+
+        //    //deshabilitar edición de texto celda
+        //    dgvAlumnos.EditMode = DataGridViewEditMode.EditProgrammatically;
+
+
+
 
         //logica de crud
         private bool ValidarCampos()
@@ -147,7 +172,7 @@ namespace GestionAca
                 {
                     connection.Open();
                     string query = @"
-                                INSERT INTO Materia (nombre, id_carrera, id_profesor, turno, estado)
+                                INSERT INTO Materias (nombre, id_carrera, id_profesor, turno, estado)
                                 VALUES (@nombre, @id_carrera, @id_profesor, @turno, @estado)";
 
                     SqlCommand command = new SqlCommand(query, connection);
@@ -187,7 +212,7 @@ namespace GestionAca
                 {
                     connection.Open();
                     string query = @"
-                        UPDATE Materia SET
+                        UPDATE Materias SET
                             nombre = @nombre,
                             id_carrera = @id_carrera,
                             id_profesor = @id_profesor,
@@ -234,7 +259,7 @@ namespace GestionAca
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     connection.Open();
-                    string query = "UPDATE Materias SET estado = 'inactivo' WHERE id_materia = @id";
+                    string query = "UPDATE Materias SET estado = '0' WHERE id_materia = @id";
 
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@id", txtID.Text);
@@ -267,11 +292,5 @@ namespace GestionAca
         {
             this.Close();
         }
-
-        private void btnInsertar_Click_1(object sender, EventArgs e)
-        {
-
-        }
-
     }
 }

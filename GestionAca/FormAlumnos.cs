@@ -38,7 +38,7 @@ namespace GestionAca
             {                
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
-                    string query = "SELECT id_alumno, apellido, nombre, dni, legajo, estado FROM Alumnos";
+                    string query = "SELECT id_alumno, apellido, nombre, dni, legajo, estado FROM Alumnos WHERE estado = 1";
                     SqlDataAdapter da = new SqlDataAdapter(query, connection);
                     DataTable dt = new DataTable();
                     da.Fill(dt);
@@ -159,6 +159,7 @@ namespace GestionAca
             //confirmar baja
             if (MessageBox.Show("¿Está seguro que desea dar de baja a este alumno?", "Confirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             {
+
                 return;
             }
 
@@ -167,7 +168,7 @@ namespace GestionAca
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     connection.Open();
-                    string query = "UPDATE Alumnos SET estado= '0' WHERE id_alumno = @id";
+                    string query = "UPDATE Alumnos SET estado = '0' WHERE id_alumno = @id";
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@id", txtID.Text);
 
@@ -222,7 +223,7 @@ namespace GestionAca
 
         private void dgvAlumnos_Click(object sender, EventArgs e)
         {
-            //cargar datos de la columna clickeada en objetos txt
+            //cargar datos de la fila clickeada en objetos txt
 
             txtID.Text = dgvAlumnos.SelectedRows[0].Cells["id_alumno"].Value.ToString();
             txtApellido.Text = dgvAlumnos.SelectedRows[0].Cells["apellido"].Value.ToString();
