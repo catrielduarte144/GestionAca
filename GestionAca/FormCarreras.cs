@@ -29,7 +29,7 @@ namespace GestionAca
             {
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
-                    string query = "SELECT id_carrera, nombre, sede, estado FROM carreras";
+                    string query = "SELECT id_carrera, nombre, sede, estado FROM carreras where estado = 1";
                     SqlDataAdapter da = new SqlDataAdapter(query, connection);
                     DataTable dt = new DataTable();
                     da.Fill(dt);

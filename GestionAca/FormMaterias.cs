@@ -143,9 +143,9 @@ namespace GestionAca
         //logica de crud
         private bool ValidarCampos()
         {
-            Debug.WriteLine("Carrera: " + cmbCarrera.SelectedValue);
-            Debug.WriteLine("Profesor: " + cmbProfesor.SelectedValue);
-            Debug.WriteLine("Estado: " + cmbEstado.SelectedValue);
+            //Debug.WriteLine("Carrera: " + cmbCarrera.SelectedValue);
+            //Debug.WriteLine("Profesor: " + cmbProfesor.SelectedValue);
+            //Debug.WriteLine("Estado: " + cmbEstado.SelectedValue);
 
             if (string.IsNullOrWhiteSpace(txtMateria.Text) ||
                 cmbCarrera.SelectedValue == null ||
@@ -257,7 +257,8 @@ namespace GestionAca
                 using (SqlConnection connection = DatabaseConnection.GetConnection())
                 {
                     connection.Open();
-                    string query = "UPDATE Materias SET estado = '0' WHERE id_materia = @id";
+                    string query = "delete Materias WHERE id_materia = @id";
+                    //delete profesores where id_profesor = @id_profesor
 
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@id", txtID.Text);
