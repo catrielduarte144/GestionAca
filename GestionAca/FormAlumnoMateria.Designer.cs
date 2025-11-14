@@ -37,19 +37,21 @@
             // dgvAlumnoMateria
             // 
             this.dgvAlumnoMateria.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvAlumnoMateria.Location = new System.Drawing.Point(39, 116);
+            this.dgvAlumnoMateria.Location = new System.Drawing.Point(26, 75);
+            this.dgvAlumnoMateria.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dgvAlumnoMateria.Name = "dgvAlumnoMateria";
             this.dgvAlumnoMateria.RowHeadersWidth = 62;
             this.dgvAlumnoMateria.RowTemplate.Height = 28;
-            this.dgvAlumnoMateria.Size = new System.Drawing.Size(638, 150);
+            this.dgvAlumnoMateria.Size = new System.Drawing.Size(547, 395);
             this.dgvAlumnoMateria.TabIndex = 23;
             // 
             // btsCerrar
             // 
             this.btsCerrar.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-            this.btsCerrar.Location = new System.Drawing.Point(621, 64);
+            this.btsCerrar.Location = new System.Drawing.Point(414, 42);
+            this.btsCerrar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btsCerrar.Name = "btsCerrar";
-            this.btsCerrar.Size = new System.Drawing.Size(65, 34);
+            this.btsCerrar.Size = new System.Drawing.Size(43, 22);
             this.btsCerrar.TabIndex = 24;
             this.btsCerrar.Text = "Cerrar";
             this.btsCerrar.UseVisualStyleBackColor = false;
@@ -57,22 +59,24 @@
             // btnActualizar
             // 
             this.btnActualizar.BackColor = System.Drawing.SystemColors.Info;
-            this.btnActualizar.Location = new System.Drawing.Point(71, 343);
+            this.btnActualizar.Location = new System.Drawing.Point(493, 37);
+            this.btnActualizar.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.btnActualizar.Name = "btnActualizar";
-            this.btnActualizar.Size = new System.Drawing.Size(120, 50);
+            this.btnActualizar.Size = new System.Drawing.Size(80, 32);
             this.btnActualizar.TabIndex = 25;
             this.btnActualizar.Text = "ACTUALIZAR";
             this.btnActualizar.UseVisualStyleBackColor = false;
             // 
             // FormAlumnoMateria
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(919, 549);
             this.Controls.Add(this.btnActualizar);
             this.Controls.Add(this.btsCerrar);
             this.Controls.Add(this.dgvAlumnoMateria);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "FormAlumnoMateria";
             this.Text = "FormAlumnoMateria";
             this.Load += new System.EventHandler(this.FormAlumnoMateria_Load);

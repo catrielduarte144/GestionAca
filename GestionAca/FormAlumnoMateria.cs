@@ -40,8 +40,8 @@ namespace GestionAca
                         FROM alumnos_materias am
                         INNER JOIN alumnos a ON a.id_alumno = am.id_alumno
                         INNER JOIN materias mt ON mt.id_materia = am.id_materia
-                        INNER JOIN profesores pf ON pf.id_profesor = am.id_profesor
-                        INNER JOIN carreras c ON c.id_carrera = am.id_carreraa
+                        INNER JOIN Profesores pf ON pf.id_profesor = mt.id_profesor
+                        INNER JOIN carreras c ON c.id_carrera = mt.id_carrera
                         ORDER BY a.legajo, mt.nombre";
 
                     SqlDataAdapter da = new SqlDataAdapter(query, connection);
