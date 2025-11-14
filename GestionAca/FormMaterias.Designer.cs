@@ -81,6 +81,7 @@
             this.btsCerrar.TabIndex = 2;
             this.btsCerrar.Text = "Cerrar";
             this.btsCerrar.UseVisualStyleBackColor = false;
+            this.btsCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
             // btnEliminarMateria
             // 
@@ -92,6 +93,7 @@
             this.btnEliminarMateria.TabIndex = 3;
             this.btnEliminarMateria.Text = "Eliminar";
             this.btnEliminarMateria.UseVisualStyleBackColor = false;
+            this.btnEliminarMateria.Click += new System.EventHandler(this.btnEliminarMateria_Click);
             // 
             // btnEditar
             // 
@@ -103,6 +105,7 @@
             this.btnEditar.TabIndex = 4;
             this.btnEditar.Text = "Editar";
             this.btnEditar.UseVisualStyleBackColor = false;
+            this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
             // label1
             // 

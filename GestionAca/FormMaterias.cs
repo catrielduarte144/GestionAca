@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Text;
 using System.Linq;
@@ -103,6 +104,16 @@ namespace GestionAca
             CargarComboBoxes();
             CargarMaterias();
             txtID.ReadOnly = true;
+
+            //asignar valor 1 y 0 a textos Activo e Inactivo de cmbEstado
+            cmbEstado.DisplayMember = "Text";
+            cmbEstado.ValueMember = "Value";
+            cmbEstado.DataSource = new[]
+            {
+                new { Text = "Activo", Value = 1 },
+                new { Text = "Inactivo", Value = 0 }
+            }.ToList();
+
         }
 
         //mostrar datos en los cuadros al seleccionar una fila
@@ -121,7 +132,7 @@ namespace GestionAca
             else
                 cmbEstado.SelectedIndex = -1; // si está nulo u otro valor
 
-
+            //asignacion a combo Profesor y Carrera
             cmbProfesor.Text = dgvMateria.SelectedRows[0].Cells["profesor"].Value?.ToString() ?? string.Empty;
             cmbCarrera.Text = dgvMateria.SelectedRows[0].Cells["carrera"].Value?.ToString() ?? string.Empty;
 
@@ -129,29 +140,17 @@ namespace GestionAca
             dgvMateria.EditMode = DataGridViewEditMode.EditProgrammatically;
         }
 
-        //private void dgvAlumnos_Click(object sender, EventArgs e)
-        //{
-        //    //cargar datos de la columna clickeada en objetos txt
-
-        //    txtID.Text = dgvAlumnos.SelectedRows[0].Cells["id_alumno"].Value.ToString();
-        //    txtApellido.Text = dgvAlumnos.SelectedRows[0].Cells["apellido"].Value.ToString();
-        //    txtNombre.Text = dgvAlumnos.SelectedRows[0].Cells["nombre"].Value.ToString();
-        //    txtLegajo.Text = dgvAlumnos.SelectedRows[0].Cells["legajo"].Value.ToString();
-        //    txtDni.Text = dgvAlumnos.SelectedRows[0].Cells["dni"].Value.ToString();
-
-        //    //deshabilitar edición de texto celda
-        //    dgvAlumnos.EditMode = DataGridViewEditMode.EditProgrammatically;
-
-
-
-
         //logica de crud
         private bool ValidarCampos()
         {
+            Debug.WriteLine("Carrera: " + cmbCarrera.SelectedValue);
+            Debug.WriteLine("Profesor: " + cmbProfesor.SelectedValue);
+            Debug.WriteLine("Estado: " + cmbEstado.SelectedValue);
+
             if (string.IsNullOrWhiteSpace(txtMateria.Text) ||
                 cmbCarrera.SelectedValue == null ||
                 cmbProfesor.SelectedValue == null ||
-                cmbEstado.SelectedValue == null //||
+                cmbEstado.SelectedItem == null //||
                 //cmbTurno.SelectedValue == null
                 )
             {
@@ -172,16 +171,16 @@ namespace GestionAca
                 {
                     connection.Open();
                     string query = @"
-                                INSERT INTO Materias (nombre, id_carrera, id_profesor, turno, estado)
-                                VALUES (@nombre, @id_carrera, @id_profesor, @turno, @estado)";
+                                INSERT INTO Materias (nombre, id_carrera, id_profesor, estado)
+                                VALUES (@nombre, @id_carrera, @id_profesor, @estado)";
 
                     SqlCommand command = new SqlCommand(query, connection);
                     command.Parameters.AddWithValue("@nombre", txtMateria.Text.Trim());
                     //se obtiene clave foranea 
                     command.Parameters.AddWithValue("@id_carrera", cmbCarrera.SelectedValue);
                     command.Parameters.AddWithValue("@id_profesor", cmbProfesor.SelectedValue);
-                   // command.Parameters.AddWithValue("@turno", cmbTurno.SelectedItem.ToString());
-                    command.Parameters.AddWithValue("@estado", cmbEstado.SelectedItem.ToString());
+                    // command.Parameters.AddWithValue("@turno", cmbTurno.SelectedItem.ToString());
+                    command.Parameters.AddWithValue("@estado", Convert.ToInt32(cmbEstado.SelectedValue));
 
                     command.ExecuteNonQuery();
                     MessageBox.Show("Materia insertada correctamente.", "Éxito", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -216,7 +215,6 @@ namespace GestionAca
                             nombre = @nombre,
                             id_carrera = @id_carrera,
                             id_profesor = @id_profesor,
-                            turno = @turno,
                             estado = @estado
                         WHERE id_materia = @id";
 

@@ -41,8 +41,8 @@
             // 
             this.btnAlumno.BackColor = System.Drawing.SystemColors.Info;
             this.btnAlumno.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.btnAlumno.Location = new System.Drawing.Point(111, 103);
-            this.btnAlumno.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAlumno.Location = new System.Drawing.Point(89, 103);
+            this.btnAlumno.Margin = new System.Windows.Forms.Padding(2);
             this.btnAlumno.Name = "btnAlumno";
             this.btnAlumno.Size = new System.Drawing.Size(122, 40);
             this.btnAlumno.TabIndex = 0;
@@ -66,8 +66,8 @@
             // 
             this.btnMateria.BackColor = System.Drawing.SystemColors.Info;
             this.btnMateria.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.btnMateria.Location = new System.Drawing.Point(332, 110);
-            this.btnMateria.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnMateria.Location = new System.Drawing.Point(309, 103);
+            this.btnMateria.Margin = new System.Windows.Forms.Padding(2);
             this.btnMateria.Name = "btnMateria";
             this.btnMateria.Size = new System.Drawing.Size(122, 40);
             this.btnMateria.TabIndex = 6;
@@ -79,8 +79,8 @@
             // 
             this.btnCarrera.BackColor = System.Drawing.SystemColors.Info;
             this.btnCarrera.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.btnCarrera.Location = new System.Drawing.Point(111, 181);
-            this.btnCarrera.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnCarrera.Location = new System.Drawing.Point(89, 167);
+            this.btnCarrera.Margin = new System.Windows.Forms.Padding(2);
             this.btnCarrera.Name = "btnCarrera";
             this.btnCarrera.Size = new System.Drawing.Size(122, 40);
             this.btnCarrera.TabIndex = 7;
@@ -92,8 +92,8 @@
             // 
             this.btnProfesor.BackColor = System.Drawing.SystemColors.Info;
             this.btnProfesor.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.btnProfesor.Location = new System.Drawing.Point(332, 181);
-            this.btnProfesor.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnProfesor.Location = new System.Drawing.Point(309, 167);
+            this.btnProfesor.Margin = new System.Windows.Forms.Padding(2);
             this.btnProfesor.Name = "btnProfesor";
             this.btnProfesor.Size = new System.Drawing.Size(122, 40);
             this.btnProfesor.TabIndex = 8;
@@ -105,8 +105,8 @@
             // 
             this.btnSalir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
             this.btnSalir.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.btnSalir.Location = new System.Drawing.Point(367, 250);
-            this.btnSalir.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnSalir.Location = new System.Drawing.Point(353, 237);
+            this.btnSalir.Margin = new System.Windows.Forms.Padding(2);
             this.btnSalir.Name = "btnSalir";
             this.btnSalir.Size = new System.Drawing.Size(78, 40);
             this.btnSalir.TabIndex = 9;
@@ -118,8 +118,8 @@
             // 
             this.btnAlumnoMateria.BackColor = System.Drawing.SystemColors.Info;
             this.btnAlumnoMateria.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.btnAlumnoMateria.Location = new System.Drawing.Point(111, 244);
-            this.btnAlumnoMateria.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.btnAlumnoMateria.Location = new System.Drawing.Point(89, 237);
+            this.btnAlumnoMateria.Margin = new System.Windows.Forms.Padding(2);
             this.btnAlumnoMateria.Name = "btnAlumnoMateria";
             this.btnAlumnoMateria.Size = new System.Drawing.Size(189, 40);
             this.btnAlumnoMateria.TabIndex = 10;
@@ -132,7 +132,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveBorder;
-            this.ClientSize = new System.Drawing.Size(539, 356);
+            this.ClientSize = new System.Drawing.Size(515, 356);
             this.Controls.Add(this.btnAlumnoMateria);
             this.Controls.Add(this.btnSalir);
             this.Controls.Add(this.btnProfesor);
@@ -140,7 +140,7 @@
             this.Controls.Add(this.btnMateria);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnAlumno);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "FormPrincipal";
             this.Text = "FormPrincipal";
             this.Load += new System.EventHandler(this.FormPrincipal_Load);

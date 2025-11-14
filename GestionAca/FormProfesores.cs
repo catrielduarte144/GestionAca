@@ -13,234 +13,292 @@ namespace GestionAca
 {
     public partial class FormProfesores : Form
     {
+        string cadenaConexion = "Server =localhost\\SQLEXPRESS; Database=GestionAcademica; Trusted_Connection=True ";
+
         public FormProfesores()
         {
             InitializeComponent();
-            CargarProfesores();
-            CargarEstado();
-            txtID.ReadOnly = true; //el ID no se puede modificar
         }
-
-        private void CargarProfesores()
-        {
-            using (SqlConnection connection = DatabaseConnection.GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    string consulta = @"
-                        SELECT
-                            p.id_profesor,
-                            p.nombre,
-                            p.apellido,
-                            p.email,
-                            p.telefono,
-                            e.estado AS Estado
-                        FROM profesor p
-                        INNER JOIN Estado e ON p.id_estado = e.Id";
-
-                    SqlDataAdapter adaptador = new SqlDataAdapter(consulta, connection);
-                    DataTable tabla = new DataTable();
-                    adaptador.Fill(tabla);
-                    dgvProfesor.DataSource = tabla;
-
-                    if (dgvProfesor.Columns.Contains("id_profesor"))
-                    {
-                        dgvProfesor.Columns["id_profesor"].Visible = false;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar profesores: " + ex.Message);
-                }
-            }
-        }
-
-        //cargar ids y nombre a la tabla (Estado)
-        private void CargarEstado()
-        {
-            using (SqlConnection connection = DatabaseConnection.GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    string consulta = "SELECT Id, Estado FROM Estado";
-                    SqlDataAdapter adaptador = new SqlDataAdapter(consulta, connection);
-                    DataTable tabla = new DataTable();
-                    adaptador.Fill(tabla);
-
-                    cmbEstado.DataSource = tabla;
-                    cmbEstado.DisplayMember = "Estado";
-                    cmbEstado.ValueMember = "Id";
-                    cmbEstado.SelectedIndex = -1; //ningun elemento seleccionado por defecto
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar estados: " + ex.Message);
-                }
-            }
-        }
-
-        //cargar datos al seleccionar fila
-        private void dgvProfesor_SelectionChanged(object sender, EventArgs e)
-        {
-            if (dgvProfesor.SelectedRows.Count > 0)
-            {
-                DataGridViewRow row = dgvProfesor.SelectedRows[0];
-                if (!row.IsNewRow)
-                {
-                    //obtener datos de la fila seleccionada
-                    string id = row.Cells["id_profesor"].Value?.ToString() ?? string.Empty;
-                    string nombre = row.Cells["nombre"].Value?.ToString() ?? string.Empty;
-                    string apellido = row.Cells["apellido"].Value?.ToString() ?? string.Empty;
-                    string email = row.Cells["email"].Value?.ToString() ?? string.Empty;
-                    string telefono = row.Cells["telefono"].Value?.ToString() ?? string.Empty;
-                    string estado = row.Cells["Estado"].Value?.ToString() ?? string.Empty;
-
-                    //asignar datos a los controles del formulario
-                    txtID.Text = id;
-                    txtNombre.Text = nombre;
-                    txtApellido.Text = apellido;
-                    txtEmail.Text = email;
-                    txtTelefono.Text = telefono;
-
-                    cmbEstado.SelectedIndex = cmbEstado.FindStringExact(estado);
-                }
-            }
-        }
-
-        private void btnCerrar_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void FormProfesores_Load(object sender, EventArgs e)
-        {
-            this.dgvProfesor.SelectionChanged += new System.EventHandler(this.dgvProfesor_SelectionChanged);
-        }
-
-        private void btnInsertarProf_Click(object sender, EventArgs e)
-        {
-            // Lógica para insertar un nuevo profesor
-            if (string.IsNullOrWhiteSpace(txtNombre.Text) ||
-                string.IsNullOrWhiteSpace(txtApellido.Text) ||
-                string.IsNullOrWhiteSpace(txtEmail.Text) ||
-                string.IsNullOrWhiteSpace(txtTelefono.Text) ||
-                cmbEstado.SelectedIndex == -1)
-            {
-                MessageBox.Show("Por favor, complete todos los campos antes de grabar.", "Campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            using (SqlConnection connection = DatabaseConnection.GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    string query = @"
-                        INSERT INTO profesor (nombre, apellido, email, telefono, id_estado)
-                        VALUES (@nombre, @apellido, @email, @telefono, @id_estado)";
-                    SqlCommand command = new SqlCommand(query, connection);
-                    command.Parameters.AddWithValue("@nombre", txtNombre.Text.Trim());
-                    command.Parameters.AddWithValue("@apellido", txtApellido.Text);
-                    command.Parameters.AddWithValue("@email", txtEmail.Text);
-                    command.Parameters.AddWithValue("@telefono", txtTelefono.Text);
-                    command.Parameters.AddWithValue("@id_estado", cmbEstado.SelectedValue);
-
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("Profesor agregado correctamente.");
-                    CargarProfesores(); //actualizar datagridview
-                    LimpiarCampos();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al agregar profesor: " + ex.Message);
-                }
-            }
-        }
-
+        //ESTE BOTON SE LLAMA EDITAR, PERO SU LABEL ES RESET, IMPORTAAAANTEEEEE SE LLAMA EDIATR NO ME DEJA CAMBIARLO O SE ROMPE TODO AAAAA
+        //AL BOTON QUE SE LLAMA RESET LE VOY A PONER DE LABEL EDITAR
         private void btnEditarProf_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtID.Text) || dgvProfesor.SelectedRows.Count == 0)
+            limpiar();
+            btnInsertarProf.Enabled = true;
+            btnEditarProf.Enabled = false;
+        }
+
+        //esto es para cargar el data grid 
+        private void FormProfesores_Load(object sender, EventArgs e)
+        {
+            leerProfesores();
+            limpiar();
+        }
+        private void leerProfesores()
+        {
+            try
             {
-                MessageBox.Show("Complete todos los campos", "campos incompletos", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                SqlConnection conexion = new SqlConnection(cadenaConexion);
+
+                conexion.Open();
+
+                // MessageBox.Show("Conectado");
+
+                string query = "select * from Profesores";
+
+                //comando para realizar acciones, leer, modificar o borrar
+                SqlCommand comando = new SqlCommand(query, conexion);
+
+                SqlDataReader lector;
+
+                comando.CommandText = query;
+
+                DataTable tablaMemoria = new DataTable();
+
+                lector = comando.ExecuteReader();
+
+                tablaMemoria.Load(lector);
+
+                //se da el control de que datos son los que estas cargando
+                dgvProfesor.DataSource = tablaMemoria;
+
+                conexion.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+
+        }
+
+        private void limpiar()
+        {
+            //editar es el reset y eliminar es editar 
+            btnEditarProf.Enabled = false;
+            btnEliminarProf.Enabled = false;
+            txtID.Text = "";
+            txtNombre.Text = "";
+            txtApellido.Text = "";
+            txtEmail.Text = "";
+            txtTelefono.Text = "";
+
+            txtNombre.Focus();
+        }
+
+        private void agregarProfe()
+        {
+            //validacion de boxes
+            if (!validacionBox())
+            {
                 return;
             }
 
-            using (SqlConnection connection = DatabaseConnection.GetConnection())
-            {
-                try
-                {
-                    connection.Open();
-                    string consulta = "UPDATE profesor  SET nombre = @Nombre, apellido = @Apellido, email = @Email, " +
-                                   "telefono = @Telefono, id_estado = @Estado WHERE id_profesor = @Id";
-    
-                    SqlCommand command = new SqlCommand(consulta, connection);
-                    command.Parameters.AddWithValue("@Nombre", txtNombre.Text.Trim());
-                    command.Parameters.AddWithValue("@Apellido", txtApellido.Text.Trim());
-                    command.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
-                    command.Parameters.AddWithValue("@Telefono", txtTelefono.Text.Trim());
-                    command.Parameters.AddWithValue("@Estado", cmbEstado.SelectedValue);
-                    command.Parameters.AddWithValue("@Id", txtID.Text);
+            //validar datos
+            string nombre = txtNombre.Text;
+            string apellido = txtApellido.Text;
+            string email = txtEmail.Text;
+            string telefono = txtTelefono.Text;
 
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("Profesor actualizado con exito");
-                    CargarProfesores();
-                    LimpiarCampos();
-                }
-                catch (Exception ex)
+            try
+            {
+                SqlConnection cm = new SqlConnection(cadenaConexion);
+                cm.Open();
+
+                string query = "insert into Profesores (apellido, nombre, email, telefono) values (@apellido, @nombre, @email, @telefono)";
+                SqlCommand cmd = new SqlCommand(query, cm);
+
+                cmd.CommandText = query;
+
+                //parametros
+
+                cmd.Parameters.AddWithValue("@nombre", nombre);
+                cmd.Parameters.AddWithValue("@apellido", apellido);
+                cmd.Parameters.AddWithValue("@telefono", telefono);
+                cmd.Parameters.AddWithValue("@email", email);
+
+                int filas = cmd.ExecuteNonQuery();
+                MessageBox.Show($"Se registraron {filas} registros");
+
+                cm.Close();
+                leerProfesores();
+                limpiar();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+        private void btnInsertarProf_Click(object sender, EventArgs e)
+        {
+            agregarProfe();
+        }
+
+        private void dgvProfesor_DoubleClick(object sender, EventArgs e)
+        {
+            //bloquear boton insertar
+            btnInsertarProf.Enabled = false;
+            btnEditarProf.Enabled = true;
+            btnEliminarProf.Enabled = true;
+
+            //pasa datos de las cajas de txt a las celdas de la tabla 
+
+            txtID.Text = dgvProfesor.SelectedCells[0].Value.ToString();
+            txtNombre.Text = dgvProfesor.SelectedCells[1].Value.ToString();
+            txtApellido.Text = dgvProfesor.SelectedCells[2].Value.ToString();
+            txtEmail.Text = dgvProfesor.SelectedCells[3].Value.ToString();
+            txtTelefono.Text = dgvProfesor.SelectedCells[4].Value.ToString();
+
+        }
+        //este boton se llama reset, peor su label es EDITAR por lo que es el btn editar
+        private void btnResetProf_Click(object sender, EventArgs e)
+        {
+            editarProfesor();
+        }
+        private void editarProfesor()
+        {
+            //validacion de boxes
+            if (!validacionBox())
+            {
+                return;
+            }
+
+            int id_profesor = int.Parse(txtID.Text);
+            string nombre = txtNombre.Text;
+            string apellido = txtApellido.Text;
+            string email = txtEmail.Text;
+            string telefono = txtTelefono.Text;
+
+            try
+            {
+                SqlConnection con = new SqlConnection(cadenaConexion);
+                con.Open();
+
+                string consultaSql = "update Profesores set apellido =@apellido, nombre = @nombre, email = @email, telefono = @telefono where id_profesor = @id_profesor";
+                SqlCommand cod = new SqlCommand(consultaSql, con);
+
+                //parametros
+
+                cod.Parameters.AddWithValue("@nombre", nombre);
+                cod.Parameters.AddWithValue("@apellido", apellido);
+                cod.Parameters.AddWithValue("@telefono", telefono);
+                cod.Parameters.AddWithValue("@email", email);
+                cod.Parameters.AddWithValue("@id_profesor", id_profesor);
+
+
+
+                int filas = cod.ExecuteNonQuery();
+                MessageBox.Show($"Se modifico un {filas} registro con ID: {id_profesor}");
+
+                con.Close();
+
+                leerProfesores();
+                limpiar();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+
+        }
+
+        //validacion de boxes
+        private bool validacionBox()
+        {
+            if (txtNombre.Text == "")
+            {
+                MessageBox.Show("El campo nombre se encuentra vacio.");
+                txtNombre.Focus();
+                return false;
+            }
+            else
+            {
+                if (txtApellido.Text == "")
                 {
-                    MessageBox.Show("Error al actualizar profesor" + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("El campo Apellido se encuentra vacio.");
+                    txtApellido.Focus();
+                    return false;
+                }
+                else
+                {
+                    if (txtTelefono.Text == "")
+                    {
+                        MessageBox.Show("El campo telefono se encuentra vacio");
+                        txtTelefono.Focus();
+                        return false;
+                    }
+                    else
+                    {
+                        if (txtEmail.Text == "")
+                        {
+                            MessageBox.Show("El campo email se encuentra vacio");
+                            txtEmail.Focus();
+                            return false;
+                        }
+                        else
+                        {
+                            return true;
+                        }
+                    }
                 }
             }
+
         }
 
         private void btnEliminarProf_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtID.Text) || dgvProfesor.SelectedRows.Count == 0)
+            EliminarProf();
+        }
+        private void EliminarProf()
+        {
+            int id_profesor = int.Parse(txtID.Text);
+            if (txtID.Text == "")
             {
-                MessageBox.Show("Seleccione el profesor a dar de baja", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (MessageBox.Show("¿Estas seguro de dar de baja este profesor", "Comfirmar baja", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
-            {
+                MessageBox.Show("Debe tene un ID para eliminar.");
                 return;
             }
 
-            int idEstadoInactivo = 2;
+            //mensaje de advertencia 
+            DialogResult resultado = MessageBox.Show($"¿Desea eliminar este contacto?", "Confirmar", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
 
-            using (SqlConnection connection = DatabaseConnection.GetConnection())
+            if (resultado == DialogResult.OK)
             {
                 try
                 {
-                    connection.Open();
-                    //cambia el id_estado
-                    string consulta = "UPDATE profesor SET id_estado = @EstadoInactivo WHERE id_profesor = @Id";
+                    SqlConnection con = new SqlConnection(cadenaConexion);
+                    con.Open();
 
-                    SqlCommand command = new SqlCommand(consulta, connection);
-                    command.Parameters.AddWithValue("@EstadoInactivo", idEstadoInactivo);
-                    command.Parameters.AddWithValue("@Id", txtID.Text);
+                    string consultaSQLn = "delete profesores where id_profesor = @id_profesor";
+                    SqlCommand cmd = new SqlCommand(consultaSQLn, con);
 
-                    command.ExecuteNonQuery();
-                    MessageBox.Show("Profesor dado de baja correctamente");
-                    CargarProfesores();
-                    LimpiarCampos();
+                    cmd.Parameters.AddWithValue("@id_profesor", id_profesor);
+
+                    int filas = cmd.ExecuteNonQuery();
+
+                    MessageBox.Show($"Se eliminaron {filas} registros con ID: {id_profesor} ");
+                    con.Close();
+                    leerProfesores();
+                    limpiar();
+
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error al dar de baja profesor" + ex.Message, "Error BD", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(ex.ToString());
                 }
+
             }
+            else
+            {
+                return;
+            }
+
+
         }
 
-        private void LimpiarCampos()
+        private void btsCerrarProf_Click(object sender, EventArgs e)
         {
-            txtID.Clear();
-            txtNombre.Clear();
-            txtApellido.Clear();
-            txtEmail.Clear();
-            txtTelefono.Clear();
-            cmbEstado.SelectedIndex = -1;
+            this.Close();
         }
     }
+
 }
